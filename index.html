@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alfavinkel – Tømrer i Kvam, Innlandet</title>
+  <meta name="description" content="Alfavinkel tilbyr kvalitetstømring i Kvam og Innlandet. Jonathan Schloen – lokal tømrer med hjerte for håndverket.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#toppen" class="logo">
+        <svg class="logo__mark" width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <path d="M4 28L16 4L28 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 20H23" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span>Alfavinkel</span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Hovedmeny">
+        <ul class="nav__list">
+          <li><a href="#om-oss" class="nav__link">Om oss</a></li>
+          <li><a href="#tjenester" class="nav__link">Tjenester</a></li>
+          <li><a href="#prosjekter" class="nav__link">Prosjekter</a></li>
+          <li><a href="#kontakt" class="nav__link nav__cta">Ta kontakt</a></li>
+        </ul>
+      </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Åpne meny" aria-expanded="false" aria-controls="nav">
+        <span class="hamburger__bar"></span>
+        <span class="hamburger__bar"></span>
+        <span class="hamburger__bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="toppen">
+    <div class="hero__media">
+      <img
+        src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1920&q=80"
+        alt="Tømrer arbeider med bindingsverk på nybygg"
+        class="hero__img"
+        loading="eager"
+      >
+    </div>
+    <div class="hero__overlay" aria-hidden="true"></div>
+    <div class="container hero__content">
+      <p class="hero__eyebrow">Kvam, Innlandet</p>
+      <h1 class="hero__title">Alfavinkel</h1>
+      <p class="hero__subtitle">Tømrer Jonathan Schloen</p>
+      <p class="hero__sub">Leverer kvalitetstømring med lokal kunnskap og stolthet i hvert prosjekt.</p>
+      <div class="hero__actions">
+        <a href="#tjenester" class="btn btn--primary">Se våre tjenester</a>
+        <a href="#kontakt" class="btn btn--outline">Ta kontakt</a>
+      </div>
+    </div>
+    <a href="#om-oss" class="hero__scroll" aria-label="Scroll ned til innhold">
+      <div class="hero__scroll-line" aria-hidden="true"></div>
+    </a>
+  </section>
+
+  <!-- OM OSS -->
+  <section class="about" id="om-oss">
+    <div class="about__inner">
+      <div class="about__image-wrap">
+        <img
+          src="images/om-oss.webp"
+          alt="Håndverker fra Alfavinkel i arbeid"
+          class="about__img"
+          loading="lazy"
+        >
+        <div class="about__badge" aria-hidden="true">
+          <span class="about__badge-num">10+</span>
+          <span class="about__badge-txt">års erfaring</span>
+        </div>
+      </div>
+      <div class="about__content">
+        <span class="section-label">Om oss</span>
+        <h2 class="section-title">Lokal tømrer med<br>hjertet i håndverket</h2>
+        <p class="about__lead">Jonathan Schloen startet Alfavinkel med én overbevisning: at godt tømrerarbeid handler om mer enn teknikk.</p>
+        <p class="about__body">Det handler om å lytte, forstå og bygge noe varig – i samarbeid med kunden. Med mange års erfaring fra Innlandet kjenner vi klimaet, materialene og de lokale kravene. Vi tar på oss oppdrag i Kvam og omegn, og setter alltid kvalitet foran kvantitet.</p>
+        <ul class="about__list">
+          <li class="about__list-item">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10L8 14L16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Lokal kunnskap om Innlandets klima og materialer
+          </li>
+          <li class="about__list-item">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10L8 14L16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Fast pris og klare, skriftlige avtaler
+          </li>
+          <li class="about__list-item">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10L8 14L16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Miljøvennlige og bærekraftige materialer
+          </li>
+          <li class="about__list-item">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10L8 14L16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Ryddig byggeplass og respekt for hjemmet ditt
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- TJENESTER -->
+  <section class="services" id="tjenester">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Tjenester</span>
+        <h2 class="section-title">Hva vi gjør</h2>
+        <p class="section-desc">Vi tilbyr et bredt spekter av tømrertjenester for private og næringskunder i Kvam og omegn.</p>
+      </div>
+      <div class="services__grid">
+
+        <div class="service-card">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+              <path d="M4 28V16L16 6L28 16V28" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 28V20H20V28" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 6V2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="service-card__title">Loftsutbygging</h3>
+          <p class="service-card__text">Vi gjør ubrukte loftsrom om til funksjonelle og trivelige rom – fra planlegging til ferdig resultat.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+              <rect x="4" y="4" width="24" height="24" rx="2" stroke="currentColor" stroke-width="2"/>
+              <path d="M4 12H28M4 20H28M12 4V28M20 4V28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="service-card__title">Kledning & panel</h3>
+          <p class="service-card__text">Utvendig og innvendig kledning som gir huset et nytt uttrykk og bedre vern mot vær og vind.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+              <path d="M4 26H28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M7 26V14M13 26V14M19 26V14M25 26V14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M5 14H27" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M4 29H28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="service-card__title">Terrasse & uteplass</h3>
+          <p class="service-card__text">En terrasse som passer til huset og tomten. Vi bygger i tre, kompositt eller overflatebehandlet material.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+              <rect x="4" y="8" width="24" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+              <path d="M4 14H28" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 14V26M20 14V26" stroke="currentColor" stroke-width="2"/>
+              <path d="M10 8V6C10 4.9 10.9 4 12 4H20C21.1 4 22 4.9 22 6V8" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3 class="service-card__title">Innredning & skap</h3>
+          <p class="service-card__text">Skreddersydde løsninger for garderober, kjøkken og bad – tilpasset ditt hjem og din hverdag.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+              <path d="M6 26L10 22M26 6L22 10M10 22C8.34 20.34 8.34 17.66 10 16L16 10C17.66 8.34 20.34 8.34 22 10C23.66 11.66 23.66 14.34 22 16L16 22C14.34 23.66 11.66 23.66 10 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 6L10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="service-card__title">Restaurering</h3>
+          <p class="service-card__text">Vi gir eldre hus nytt liv med respekt for det originale håndverket. Erfaring med laftet og tradisjonell tømring.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+              <path d="M4 28V18L10 12H22L28 18V28" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 12V4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 8L16 4L20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 28V22H20V28" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="service-card__title">Nybygg & tilbygg</h3>
+          <p class="service-card__text">Fra råbygg til ferdig snekkerarbeid. Vi samarbeider gjerne med andre fagfolk for et helhetlig resultat.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROSJEKTER / GALLERI -->
+  <section class="gallery" id="prosjekter">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label section-label--light">Prosjekter</span>
+        <h2 class="section-title section-title--light">Vårt arbeid</h2>
+        <p class="section-desc section-desc--light">Et lite utvalg av prosjekter vi er stolte av.</p>
+      </div>
+      <div class="gallery__grid">
+
+        <div class="gallery__item">
+          <img
+            src="images/prosjekt-03.webp"
+            alt="Prosjekt – Alfavinkel"
+            loading="lazy"
+          >
+          <div class="gallery__overlay">
+            <span class="gallery__label">Prosjekt</span>
+          </div>
+        </div>
+
+        <div class="gallery__item">
+          <img
+            src="images/prosjekt-05.webp"
+            alt="Prosjekt – Alfavinkel"
+            loading="lazy"
+          >
+          <div class="gallery__overlay">
+            <span class="gallery__label">Prosjekt</span>
+          </div>
+        </div>
+
+        <div class="gallery__item">
+          <img
+            src="images/prosjekt-07.webp"
+            alt="Prosjekt – Alfavinkel"
+            loading="lazy"
+          >
+          <div class="gallery__overlay">
+            <span class="gallery__label">Prosjekt</span>
+          </div>
+        </div>
+
+        <div class="gallery__item">
+          <img
+            src="images/prosjekt-08.webp"
+            alt="Prosjekt – Alfavinkel"
+            loading="lazy"
+          >
+          <div class="gallery__overlay">
+            <span class="gallery__label">Prosjekt</span>
+          </div>
+        </div>
+
+        <div class="gallery__item">
+          <img
+            src="images/prosjekt-09.webp"
+            alt="Prosjekt – Alfavinkel"
+            loading="lazy"
+          >
+          <div class="gallery__overlay">
+            <span class="gallery__label">Prosjekt</span>
+          </div>
+        </div>
+
+        <div class="gallery__item">
+          <img
+            src="images/prosjekt-12.webp"
+            alt="Prosjekt – Alfavinkel"
+            loading="lazy"
+          >
+          <div class="gallery__overlay">
+            <span class="gallery__label">Prosjekt</span>
+          </div>
+        </div>
+
+        <div class="gallery__item">
+          <img
+            src="images/prosjekt-13.webp"
+            alt="Prosjekt – Alfavinkel"
+            loading="lazy"
+          >
+          <div class="gallery__overlay">
+            <span class="gallery__label">Prosjekt</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section class="contact" id="kontakt">
+    <div class="container">
+      <div class="contact__inner">
+        <div class="contact__info">
+          <span class="section-label">Kontakt</span>
+          <h2 class="section-title">La oss snakke<br>om prosjektet ditt</h2>
+          <p class="contact__intro">Har du et prosjekt du ønsker å realisere? Ta kontakt for en uforpliktende prat og et tilbud.</p>
+          <div class="contact__details">
+
+            <a href="tel:+4799999999" class="contact__detail-item">
+              <div class="contact__detail-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M2 3C2 2.45 2.45 2 3 2H6.28C6.76 2 7.18 2.31 7.33 2.77L8.6 6.57C8.73 6.97 8.6 7.41 8.28 7.67L6.76 8.84C7.84 11.06 9.94 13.16 12.16 14.24L13.33 12.72C13.59 12.4 14.03 12.27 14.43 12.4L18.23 13.67C18.69 13.82 19 14.24 19 14.72V18C19 18.55 18.55 19 18 19H17C8.72 19 2 12.28 2 4V3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <span class="contact__detail-label">Telefon</span>
+                <span class="contact__detail-value">+47 999 99 999</span>
+              </div>
+            </a>
+
+            <a href="mailto:jonathan@alfavinkel.no" class="contact__detail-item">
+              <div class="contact__detail-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 7L10 12L18 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div>
+                <span class="contact__detail-label">E-post</span>
+                <span class="contact__detail-value">jonathan@alfavinkel.no</span>
+              </div>
+            </a>
+
+            <div class="contact__detail-item">
+              <div class="contact__detail-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2C7.24 2 5 4.24 5 7C5 11.25 10 18 10 18C10 18 15 11.25 15 7C15 4.24 12.76 2 10 2ZM10 9C8.9 9 8 8.1 8 7C8 5.9 8.9 5 10 5C11.1 5 12 5.9 12 7C12 8.1 11.1 9 10 9Z" stroke="currentColor" stroke-width="1.5"/></svg>
+              </div>
+              <div>
+                <span class="contact__detail-label">Område</span>
+                <span class="contact__detail-value">Kvam og Innlandet</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <form class="contact__form" onsubmit="return false;" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Navn</label>
+              <input type="text" id="name" name="name" placeholder="Ditt fulle navn" autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="phone">Telefon</label>
+              <input type="tel" id="phone" name="phone" placeholder="+47 xxx xx xxx" autocomplete="tel">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">E-post</label>
+            <input type="email" id="email" name="email" placeholder="din@epost.no" autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="message">Melding</label>
+            <textarea id="message" name="message" rows="5" placeholder="Fortell litt om prosjektet ditt – hva skal gjøres, og når?"></textarea>
+          </div>
+          <button type="submit" class="btn btn--dark btn--full">Send melding</button>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="#toppen" class="logo footer__logo">
+        <svg class="logo__mark" width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <path d="M4 28L16 4L28 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 20H23" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span>Alfavinkel</span>
+      </a>
+      <p class="footer__tagline">Kvalitetstømring i Kvam og Innlandet</p>
+      <p class="footer__copy">© 2025 Alfavinkel · Jonathan Schloen</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
