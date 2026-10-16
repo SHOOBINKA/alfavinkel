@@ -2,9 +2,36 @@
    ALFAVINKEL · style.css
    ============================================= */
 
+/* Fontene ligger lokalt saa besoekende ikke sender IP-adressen sin til
+   Google. Variable fonter, latin-utvalg (dekker æøå). Lisens: fonts/OFL-*.txt */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/inter-latin-wght-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('fonts/playfair-display-latin-wght-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('fonts/playfair-display-latin-wght-italic.woff2') format('woff2');
+}
+
 :root {
   --dark:   #251605;
   --accent: #C57B57;
+  /* --accent gir bare 3.2:1 mot lyst. Disse to holder WCAG AA (4.5:1). */
+  --accent-strong: #A05A39; /* bakgrunn bak hvit tekst */
+  --accent-ink:    #8E4F31; /* tekst paa lys bunn, og hover for --accent-strong */
   --warm:   #F1AB86;
   --light:  #F7DBA7;
   --steel:  #9CAFB7;
@@ -19,8 +46,16 @@
   --radius:    8px;
   --radius-lg: 16px;
 
-  --ease: cubic-bezier(0.4, 0, 0.2, 1);
-  --t:    0.28s;
+  /* All hover og fokus bruker --t og --ease. Bildezoom bruker --t-slow.
+     Hover bare paa det som kan trykkes paa: klikkbare kort loefter seg
+     --lift-card, knapper --lift-btn. */
+  --ease:      cubic-bezier(0.4, 0, 0.2, 1);
+  --t:         0.28s;
+  --t-slow:    0.65s;
+  --lift-card: -4px;
+  --lift-btn:  -2px;
+  --zoom:      1.05;
+  --card-shadow: 0 18px 48px rgba(37, 22, 5, 0.08);
 
   --container: 1160px;
 }
@@ -32,6 +67,15 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+/* Kobber mot den varme kontaktbunnen gir under 3:1, saa der brukes moerk. */
+.contact :focus-visible {
+  outline-color: var(--dark);
 }
 
 html {
@@ -46,6 +90,15 @@ body {
   color: var(--text);
   background: var(--white);
   overflow-x: hidden;
+  /* Footeren staar nederst ogsaa paa korte sider (404): main fyller
+     restplassen. Header og skip-lenke er posisjonert og paavirkes ikke. */
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+body > main {
+  flex: 1 0 auto;
 }
 
 img {
@@ -56,6 +109,10 @@ img {
 a {
   text-decoration: none;
   color: inherit;
+}
+/* Telefonnummer skal aldri brytes over to linjer. */
+a[href^="tel:"] {
+  white-space: nowrap;
 }
 
 ul {
@@ -80,11 +137,11 @@ button {
 /* Section labels */
 .section-label {
   display: inline-block;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-ink);
   margin-bottom: 0.85rem;
 }
 .section-label--light {
@@ -104,26 +161,11 @@ button {
   color: var(--white);
 }
 
-/* Section desc */
-.section-desc {
-  font-size: 1.05rem;
-  color: var(--muted);
-  line-height: 1.75;
-  max-width: 480px;
-}
-.section-desc--light {
-  color: rgba(255, 255, 255, 0.6);
-}
-
 /* Centered section header */
 .section-header {
   text-align: center;
   margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
-.section-header .section-desc {
-  margin-inline: auto;
-}
-
 /* =============================================
    BUTTONS
    ============================================= */
@@ -148,12 +190,12 @@ button {
 }
 
 .btn--primary {
-  background: var(--accent);
+  background: var(--accent-strong);
   color: var(--white);
 }
 .btn--primary:hover {
-  background: #ae6340;
-  transform: translateY(-2px);
+  background: var(--accent-ink);
+  transform: translateY(var(--lift-btn));
   box-shadow: 0 8px 24px rgba(197, 123, 87, 0.38);
 }
 
@@ -165,6 +207,7 @@ button {
 .btn--outline:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.85);
+  transform: translateY(var(--lift-btn));
 }
 
 .btn--dark {
@@ -173,14 +216,13 @@ button {
 }
 .btn--dark:hover {
   background: #3d2510;
-  transform: translateY(-2px);
+  transform: translateY(var(--lift-btn));
   box-shadow: 0 8px 24px rgba(37, 22, 5, 0.3);
 }
 
 .btn--full {
   width: 100%;
 }
-
 /* =============================================
    HEADER
    ============================================= */
@@ -220,10 +262,6 @@ button {
   letter-spacing: -0.01em;
   flex-shrink: 0;
 }
-.logo__mark {
-  flex-shrink: 0;
-}
-
 /* Nav */
 .nav__list {
   display: flex;
@@ -238,7 +276,7 @@ button {
   font-size: 0.88rem;
   font-weight: 500;
   border-radius: var(--radius-sm);
-  transition: color var(--t), background var(--t);
+  transition: color var(--t) var(--ease), background var(--t) var(--ease);
 }
 .nav__link:hover {
   color: var(--white);
@@ -246,13 +284,13 @@ button {
 }
 
 .nav__cta {
-  background: var(--accent);
+  background: var(--accent-strong);
   color: var(--white) !important;
   padding: 0.5rem 1.2rem;
   margin-left: 0.5rem;
 }
 .nav__cta:hover {
-  background: #ae6340 !important;
+  background: var(--accent-ink) !important;
 }
 
 /* Hamburger */
@@ -265,6 +303,29 @@ button {
   height: 44px;
   padding: 0.6rem;
   flex-shrink: 0;
+  /* Over menypanelet (z-index 199), saa krysset kan trykkes paa naar menyen er aapen. */
+  position: relative;
+  z-index: 201;
+}
+
+/* Ringeknapp i headeren. Bare paa mobil, der «Ring»-knappen i menyen ellers
+   er skjult bak hamburgeren. */
+.header__call {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-left: auto;
+  margin-right: -0.75rem;
+  border-radius: 50%;
+  background: var(--accent-strong);
+  color: var(--white);
+  flex-shrink: 0;
+  transition: background var(--t) var(--ease);
+}
+.header__call:hover {
+  background: var(--accent-ink);
 }
 .hamburger__bar {
   display: block;
@@ -292,9 +353,16 @@ button {
    ============================================= */
 .hero {
   position: relative;
-  height: 100svh;
-  min-height: 580px;
-  max-height: 1000px;
+  /* Hoeyden var fast, 100svh med min-height 580, og overflow hidden klipte
+     det som ikke fikk plass. Paa 320x568 forsvant nedre kant av
+     SMS-knappen, og verre for alle som kjoerer stoerre tekst i nettleseren.
+     Naa vokser den i stedet. min() beholder taket paa 1000 px som
+     max-height ga foer, saa hoeye skjermer ser ut som de gjorde.
+     Paddingen oeverst gjoer plass til den faste headeren, og forskjellen
+     mellom oeverst og nederst gjenskaper de 70 px teksten sto lavere
+     enn midten foer. */
+  min-height: min(100svh, 1000px);
+  padding-block: 96px 1.6rem;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -331,7 +399,6 @@ button {
 .hero__content {
   position: relative;
   z-index: 2;
-  padding-top: 70px;
   animation: fadeUp 0.85s var(--ease) 0.15s both;
 }
 
@@ -344,15 +411,6 @@ button {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.hero__eyebrow {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--warm);
-  margin-bottom: 1.2rem;
 }
 
 .hero__title {
@@ -387,32 +445,6 @@ button {
   flex-wrap: wrap;
 }
 
-/* Scroll indicator */
-.hero__scroll {
-  position: absolute;
-  bottom: 2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.hero__scroll-line {
-  width: 1px;
-  height: 56px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.55), transparent);
-  animation: scrollAnim 2.2s ease-in-out infinite;
-}
-
-@keyframes scrollAnim {
-  0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
-  45%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
-  46%  { transform-origin: bottom; }
-  100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
-}
-
 /* =============================================
    ABOUT
    ============================================= */
@@ -425,7 +457,7 @@ button {
   width: min(var(--container), 100% - 2.5rem);
   margin-inline: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr;
   gap: clamp(2.5rem, 6vw, 5.5rem);
   align-items: center;
 }
@@ -442,50 +474,6 @@ button {
   height: 100%;
   object-fit: cover;
   border-radius: var(--radius-lg);
-  transition: transform 0.65s var(--ease);
-}
-.about__image-wrap:hover .about__img {
-  transform: scale(1.03);
-}
-
-/* Clip overflow on hover zoom */
-.about__image-wrap::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.about__badge {
-  position: absolute;
-  bottom: 2rem;
-  right: -1.25rem;
-  background: var(--accent);
-  color: var(--white);
-  padding: 1.1rem 1.4rem;
-  border-radius: var(--radius);
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(197, 123, 87, 0.38);
-  z-index: 2;
-}
-.about__badge-num {
-  display: block;
-  font-family: var(--ff-heading);
-  font-size: 2.2rem;
-  font-weight: 700;
-  line-height: 1;
-  margin-bottom: 0.2rem;
-}
-.about__badge-txt {
-  display: block;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  opacity: 0.88;
 }
 
 .about__content {
@@ -505,31 +493,43 @@ button {
   font-size: 0.98rem;
   line-height: 1.85;
   color: var(--muted);
-  margin-bottom: 1.8rem;
 }
 
-.about__list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
+.about__lead,
+.about__body {
+  max-width: 62ch;
 }
 
-.about__list-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 0.93rem;
-  font-weight: 500;
-  color: var(--text);
+/* Fagene fra Geselle-aarene. Staar der bildet sto til det kommer et
+   ekte bilde av Jonathan og kollegaen. */
+/* Samme flate som kontaktboksene: en lysere tone av bakgrunnen, ingen ramme. */
+.about__trades {
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: var(--radius);
+  padding: clamp(1.75rem, 3.5vw, 2.5rem);
 }
-.about__list-item svg {
-  color: var(--accent);
-  flex-shrink: 0;
-  background: rgba(197, 123, 87, 0.12);
-  border-radius: 50%;
-  padding: 3px;
-  width: 24px;
-  height: 24px;
+
+.about__trades .section-label {
+  margin-bottom: 0.25rem;
+}
+
+.about__trades-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.about__trades-list li {
+  padding-block: 1.05rem;
+  border-bottom: 1px solid rgba(37, 22, 5, 0.08);
+  font-family: var(--ff-heading);
+  font-size: clamp(1.2rem, 2vw, 1.4rem);
+  font-weight: 700;
+  color: var(--dark);
+}
+.about__trades-list li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
 }
 
 /* =============================================
@@ -537,59 +537,50 @@ button {
    ============================================= */
 .services {
   padding-block: clamp(4rem, 9vw, 7.5rem);
-  background: #FDFAF5;
+  background: var(--white);
 }
 
+/* Fire i bredden: aatte kort gir to fulle rader, uten tomt hull nederst. */
 .services__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.25rem;
 }
 
 .service-card {
-  padding: 2rem 1.75rem 2.25rem;
+  overflow: hidden;
   background: #fff;
   border: 1.5px solid rgba(197, 123, 87, 0.14);
   border-radius: var(--radius);
-  transition: border-color var(--t) var(--ease),
-              transform var(--t) var(--ease),
-              box-shadow var(--t) var(--ease);
 }
-.service-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-5px);
-  box-shadow: 0 18px 48px rgba(37, 22, 5, 0.08);
-}
+/* Ingen hover her: kortene er ikke lenker, og et loeft lover et klikk som
+   ikke kommer. Hover er forbeholdt det som faktisk kan trykkes paa. */
 
-.service-card__icon {
-  width: 54px;
-  height: 54px;
-  background: rgba(197, 123, 87, 0.1);
-  border-radius: var(--radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent);
-  margin-bottom: 1.3rem;
-  transition: background var(--t) var(--ease),
-              color var(--t) var(--ease);
+.service-card__media {
+  display: block;
+  aspect-ratio: 4 / 3;
 }
-.service-card:hover .service-card__icon {
-  background: var(--accent);
-  color: var(--white);
+.service-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.service-card__media--top img {
+  object-position: center top;
 }
 
 .service-card__title {
+  padding: 1.1rem 1.35rem 1.25rem;
   font-family: var(--ff-heading);
   font-size: 1.15rem;
   font-weight: 600;
   color: var(--dark);
-  margin-bottom: 0.55rem;
 }
 
-.service-card__text {
-  font-size: 0.9rem;
-  line-height: 1.75;
+.services__more {
+  margin-top: 1.75rem;
+  text-align: center;
   color: var(--muted);
 }
 
@@ -622,44 +613,77 @@ button {
   border-radius: var(--radius);
   overflow: hidden;
   background: rgba(255,255,255,0.05);
+  cursor: pointer;
 }
 
 .gallery__item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.65s var(--ease);
+  transition: transform var(--t-slow) var(--ease);
 }
 .gallery__item:hover img {
-  transform: scale(1.07);
+  transform: scale(var(--zoom));
 }
 
-.gallery__overlay {
-  position: absolute;
+/* Lyskasse: klikk paa et prosjektbilde aapner det stort, med pil
+   frem/tilbake. Ingen tekst, bare bildene. */
+.lightbox {
+  position: fixed;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(37, 22, 5, 0.78) 0%,
-    transparent 55%
-  );
-  opacity: 0;
-  transition: opacity var(--t) var(--ease);
+  z-index: 300;
   display: flex;
-  align-items: flex-end;
-  padding: 1.25rem 1.35rem;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 6, 2, 0.94);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--t) var(--ease);
 }
-.gallery__item:hover .gallery__overlay {
+.lightbox.is-open {
   opacity: 1;
+  visibility: visible;
 }
 
-.gallery__label {
+.lightbox__img {
+  max-width: min(88vw, 1100px);
+  max-height: 86vh;
+  border-radius: var(--radius);
+  object-fit: contain;
+}
+
+.lightbox__close,
+.lightbox__nav {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
   color: var(--white);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border-bottom: 2px solid var(--accent);
-  padding-bottom: 2px;
+  transition: background var(--t) var(--ease);
+}
+.lightbox__close:hover,
+.lightbox__nav:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.lightbox__close {
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
+.lightbox__nav--prev {
+  left: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.lightbox__nav--next {
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /* =============================================
@@ -671,28 +695,44 @@ button {
 }
 
 .contact__inner {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: clamp(2.5rem, 6vw, 5rem);
-  align-items: start;
+  max-width: 640px;
+  margin-inline: auto;
+  text-align: center;
 }
 
 .contact .section-title {
   color: var(--dark);
 }
+/* Paa den varme bunnen trengs en moerkere tone for 4.5:1. */
+.contact .section-label {
+  color: #6B3720;
+}
 
 .contact__intro {
   font-size: 1rem;
   line-height: 1.75;
-  color: rgba(37, 22, 5, 0.68);
-  margin-bottom: 2rem;
-  max-width: 400px;
+  color: rgba(37, 22, 5, 0.78);
+  margin: 0 auto 1.25rem;
+  max-width: 460px;
+}
+.contact__intro a {
+  color: var(--dark);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--t) var(--ease);
+}
+/* --accent-ink gir bare 3.3:1 mot den varme bunnen. #6B3720 holder 5:1. */
+.contact__intro a:hover {
+  color: #6B3720;
 }
 
 .contact__details {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  max-width: 340px;
+  margin: 0.75rem auto 0;
 }
 
 .contact__detail-item {
@@ -703,12 +743,17 @@ button {
   background: rgba(255, 255, 255, 0.45);
   border-radius: var(--radius);
   color: var(--dark);
-  transition: background var(--t) var(--ease),
-              transform var(--t) var(--ease);
+  text-align: left;
+  --hover-tr: background var(--t) var(--ease),
+              transform var(--t) var(--ease),
+              box-shadow var(--t) var(--ease);
+  transition: var(--hover-tr);
 }
-.contact__detail-item:hover {
+/* Bare telefon og e-post er lenker. Omraade-boksen er en div og faar ingen hover. */
+a.contact__detail-item:hover {
   background: rgba(255, 255, 255, 0.65);
-  transform: translateX(4px);
+  transform: translateY(var(--lift-card));
+  box-shadow: var(--card-shadow);
 }
 
 .contact__detail-icon {
@@ -725,11 +770,11 @@ button {
 
 .contact__detail-label {
   display: block;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(37, 22, 5, 0.5);
+  color: rgba(37, 22, 5, 0.7);
   margin-bottom: 0.15rem;
 }
 .contact__detail-value {
@@ -737,66 +782,6 @@ button {
   font-size: 0.92rem;
   font-weight: 600;
   color: var(--dark);
-}
-
-/* Form */
-.contact__form {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  padding: clamp(1.75rem, 4vw, 2.5rem);
-  box-shadow: 0 24px 72px rgba(37, 22, 5, 0.14);
-  display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.1rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.38rem;
-}
-
-.form-group label {
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--text);
-}
-
-.form-group input,
-.form-group textarea {
-  padding: 0.78rem 1rem;
-  border: 1.5px solid rgba(197, 123, 87, 0.22);
-  border-radius: var(--radius-sm);
-  font-family: var(--ff-body);
-  font-size: 0.93rem;
-  color: var(--text);
-  background: var(--white);
-  transition: border-color var(--t) var(--ease),
-              box-shadow var(--t) var(--ease);
-  outline: none;
-  -webkit-appearance: none;
-}
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-  color: rgba(122, 92, 63, 0.45);
-}
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(197, 123, 87, 0.14);
-}
-
-.form-group textarea {
-  resize: vertical;
-  min-height: 120px;
-  line-height: 1.65;
 }
 
 /* =============================================
@@ -819,7 +804,7 @@ button {
 .footer__logo {
   color: var(--white);
   opacity: 0.9;
-  transition: opacity var(--t);
+  transition: opacity var(--t) var(--ease);
 }
 .footer__logo:hover {
   opacity: 1;
@@ -827,43 +812,130 @@ button {
 
 .footer__tagline {
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.42);
+  color: rgba(255, 255, 255, 0.6);
   margin-top: 0.2rem;
+}
+
+.footer__info {
+  font-style: normal;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 0.6rem;
 }
 
 .footer__copy {
   font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.6);
   margin-top: 0.4rem;
+}
+
+.footer__info a,
+.footer__copy a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  /* Stoerre trykkflate paa mobil uten aa endre linjeavstanden. */
+  padding-block: 6px;
+  transition: color var(--t) var(--ease);
+}
+.footer__info a:hover,
+.footer__copy a:hover {
+  color: var(--white);
+}
+
+/* =============================================
+   PERSONVERN-SIDEN
+   ============================================= */
+.legal {
+  /* 72px er hoeyden paa den faste headeren i scrolled-tilstand. */
+  padding-block: calc(72px + clamp(2.5rem, 6vw, 4rem)) clamp(4rem, 9vw, 6rem);
+}
+.legal__inner {
+  max-width: 720px;
+}
+.legal h2 {
+  font-family: var(--ff-heading);
+  font-size: 1.35rem;
+  color: var(--dark);
+  margin: 2.25rem 0 0.6rem;
+}
+.legal p {
+  line-height: 1.75;
+  margin-bottom: 0.9rem;
+}
+.legal a {
+  color: var(--accent-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--t) var(--ease);
+}
+.legal a:hover {
+  color: var(--dark);
+}
+.legal__updated {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.legal__back {
+  font-size: 0.9rem;
 }
 
 /* =============================================
    SCROLL ANIMATIONS
    ============================================= */
-.service-card,
-.gallery__item,
-.contact__detail-item,
-.about__content,
-.about__image-wrap {
+/* Fade-inn krever .js paa <html>. Uten JavaScript sto tjenestekortene,
+   galleriet og kontaktinfoen paa opacity 0 for alltid, altsaa blankt.
+   Innsvevingen bruker «translate», ikke «transform», saa den ikke kolliderer
+   med hover-loeftet. Kortets egen hover-overgang (--hover-tr) legges til,
+   ellers ville denne regelen overstyrt den. Forsinkelsen gjelder bare
+   innsvevingen, ikke hover. */
+.js .service-card,
+.js .gallery__item,
+.js .contact__detail-item,
+.js .about__content,
+.js .about__image-wrap,
+.js .about__trades {
   opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.55s var(--ease),
-              transform 0.55s var(--ease);
+  translate: 0 22px;
+  transition: opacity 0.55s var(--ease) var(--reveal-delay, 0s),
+              translate 0.55s var(--ease) var(--reveal-delay, 0s),
+              var(--hover-tr, visibility 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .service-card,
+  .js .gallery__item,
+  .js .contact__detail-item,
+  .js .about__content,
+  .js .about__image-wrap,
+  .js .about__trades {
+    opacity: 1;
+    translate: none;
+    transition: var(--hover-tr, none);
+  }
 }
 
 .service-card.is-visible,
 .gallery__item.is-visible,
 .contact__detail-item.is-visible,
 .about__content.is-visible,
-.about__image-wrap.is-visible {
+.about__image-wrap.is-visible,
+.about__trades.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  translate: 0 0;
 }
 
 /* =============================================
    RESPONSIVE — TABLET (max 960px)
    ============================================= */
 @media (max-width: 960px) {
+  /* Staaende skjerm viser bare en del av hero-bildet. Midten er snoe og
+     traer, saa utsnittet flyttes til venstre der tommerhjoernet staar. */
+  .hero__img {
+    object-position: 0% 50%;
+  }
+
   .services__grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -873,20 +945,7 @@ button {
     gap: 3rem;
   }
   .about__image-wrap {
-    aspect-ratio: 16 / 9;
-    max-height: 420px;
-  }
-  .about__badge {
-    right: 1rem;
-    bottom: 1.5rem;
-  }
-
-  .contact__inner {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-  .contact__intro {
-    max-width: 100%;
+    aspect-ratio: 4 / 3;
   }
 
   .gallery__grid {
@@ -907,7 +966,8 @@ button {
    ============================================= */
 @media (max-width: 640px) {
   /* Show hamburger, hide desktop nav */
-  .hamburger {
+  .hamburger,
+  .header__call {
     display: flex;
   }
 
@@ -947,12 +1007,23 @@ button {
     display: flex;
   }
 
-  /* Hero */
-  .hero__title {
-    font-size: clamp(2.5rem, 11vw, 3.5rem);
+  /* Hero. Smalere bilde enn paa nettbrett, saa utsnittet skyves litt mot
+     hoeyre: omtrent halve skjermen hus, halve natur.
+     Teksten er stoerre enn fra clamp() over, som er laget for bred skjerm.
+     Broedteksten holder minst 16 px, og avstanden mellom tittel, undertittel
+     og tekst beholder samme trinn som paa desktop. */
+  .hero__img {
+    object-position: 21% 50%;
   }
-  .hero__actions {
-    flex-direction: column;
+  .hero__title {
+    font-size: clamp(2.75rem, 13vw, 3.75rem);
+  }
+  .hero__subtitle {
+    font-size: 1.15rem;
+  }
+  .hero__sub {
+    font-size: 1.05rem;
+    line-height: 1.7;
   }
   .hero__actions .btn {
     width: 100%;
@@ -960,46 +1031,336 @@ button {
 
   /* About */
   .about__image-wrap {
-    aspect-ratio: 4 / 3;
-    max-height: 300px;
-  }
-  .about__badge {
-    right: 0.5rem;
-    bottom: 1rem;
+    aspect-ratio: 1 / 1;
   }
 
   /* Services */
   .services__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  .service-card__title {
+    padding: 0.8rem 0.9rem 0.9rem;
+    font-size: 1rem;
   }
 
   /* Gallery */
   .gallery__grid {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(7, 220px);
+    /* Foerste bilde (trappa) er staaende og faar mer hoeyde. */
+    grid-template-rows: 420px repeat(6, 220px);
   }
+
   .gallery__item:nth-child(n) {
     grid-column: auto;
     grid-row: auto;
   }
 
-  /* Contact form */
-  .form-row {
-    grid-template-columns: 1fr;
+  /* Lightbox. Pilene ligger over kanten av bildet her, saa de trenger
+     moerk bunn for aa synes mot lyse bilder. */
+  .lightbox__close,
+  .lightbox__nav {
+    width: 38px;
+    height: 38px;
+    background: rgba(20, 12, 4, 0.6);
   }
-  .contact__form {
-    padding: 1.5rem;
+  .lightbox__close:hover,
+  .lightbox__nav:hover {
+    background: rgba(20, 12, 4, 0.8);
+  }
+  .lightbox__close {
+    top: 1rem;
+    right: 1rem;
+  }
+  .lightbox__nav--prev {
+    left: 0.5rem;
+  }
+  .lightbox__nav--next {
+    right: 0.5rem;
   }
 }
 
+
 /* =============================================
-   RESPONSIVE — SMALL (max 400px)
+   TILLEGG TIL TEKSTVERSJONEN
+   Fire smaa regler. Designet er ellers uendret.
    ============================================= */
-@media (max-width: 400px) {
-  .hero {
-    min-height: 500px;
+
+/* 1. <picture> er inline som standard, og da faller hoeyden sammen naar
+      bildet ligger i en beholder som styrer stoerrelsen selv. */
+.hero__media picture,
+.about__image-wrap picture,
+.gallery__item picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* 3. Bildetekst under galleriet. Foer- og etter-bildet trenger en
+      forklaring, ellers er det bare to hus. */
+.gallery__caption {
+  margin-top: 1.75rem;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+/* 4. Logoen. Ordmerket i header, hele merket i footer. Begge er hvite med
+      moerk kontur, og begge staar paa moerk bunn. Bildene er eksportert
+      4x og 2x av visningsstoerrelsen, saa de er skarpe paa retina.
+      .logo beholder display flex for vertikal sentrering. */
+.logo__img {
+  height: 33px;
+  width: auto;
+}
+
+.footer__logo-img {
+  width: 240px;
+  height: auto;
+}
+
+/* 5. Dedikert foer og etter. Samme radius og samme gap som galleriet, saa
+      de to blokkene leses som én seksjon. Ingen slider: begge bildene er
+      synlige samtidig, og etikettene staar fast uten hover. */
+.beforeafter {
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.beforeafter__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.875rem;
+}
+
+.beforeafter__item {
+  position: relative;
+  margin: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+}
+
+.beforeafter__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+  transition: transform var(--t-slow) var(--ease);
+}
+.beforeafter__item:hover img {
+  transform: scale(var(--zoom));
+}
+
+.beforeafter__tag {
+  position: absolute;
+  left: 1.35rem;
+  bottom: 1.25rem;
+  color: var(--white);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 2px;
+  text-shadow: 0 1px 12px rgba(37, 22, 5, 0.9);
+}
+
+/* 7. Tilbakemeldinger. Samme kortutseende som .service-card: hvit flate,
+      samme ramme, samme radius. Ingen hover, de er ikke lenker. */
+.reviews {
+  padding-block: clamp(4rem, 9vw, 7.5rem);
+  background: var(--white);
+}
+
+.reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.reviews__dots {
+  display: none;
+}
+
+.review {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 2rem 1.75rem;
+  background: #fff;
+  border: 1.5px solid rgba(197, 123, 87, 0.14);
+  border-radius: var(--radius);
+}
+
+.review__stars {
+  display: flex;
+  gap: 2px;
+  color: var(--accent);
+}
+
+.review__text {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.review__by {
+  margin-top: auto;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+.review__by strong {
+  color: var(--dark);
+  font-weight: 600;
+}
+
+/* Merkelappen skal vaere umulig aa overse, saa ingen eksempelomtale gaar i
+      trykken ved et uhell. Hele regelen slettes med de siste klammene. */
+.review__flag {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 1px 7px;
+  border-radius: 3px;
+  background: #ffe680;
+  color: #4a3400;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+
+.reviews__link {
+  margin-top: 2rem;
+  font-size: 0.92rem;
+}
+.reviews__link a {
+  color: var(--accent-ink);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(197, 123, 87, 0.4);
+  padding-bottom: 1px;
+  transition: border-color var(--t) var(--ease);
+}
+.reviews__link a:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* 6. Mobil for de nye komponentene. Maa staa her, etter basisreglene over,
+      og ikke oppe i det store 640-blokken. Like spesifikke regler avgjoeres
+      av rekkefoelgen i fila, og tillegget ligger sist. */
+@media (max-width: 640px) {
+  /* Side ved side gir 126 px per bilde paa en liten telefon, og da ser man
+     ingen forskjell. Stablet blir hvert bilde like bredt som skjermen. */
+  .beforeafter__grid {
+    grid-template-columns: 1fr;
   }
-  .about__badge-num {
-    font-size: 1.75rem;
+  .beforeafter {
+    margin-top: 2rem;
+  }
+  .footer__logo-img {
+    width: 200px;
+  }
+  /* Karusell: kortene ligger paa rad og snapper paa plass. Neste kort
+     stikker inn fra kanten, saa det er tydelig at man kan sveipe. Raden gaar
+     helt ut til skjermkanten (negativ margin = containerens luft). */
+  .reviews__grid {
+    display: flex;
+    position: relative;
+    gap: 0.875rem;
+    margin-inline: -1.25rem;
+    padding: 0.25rem 1.25rem 0.5rem;
+    scroll-padding-inline: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .reviews__grid::-webkit-scrollbar {
+    display: none;
+  }
+  .review {
+    flex: 0 0 86%;
+    scroll-snap-align: start;
+  }
+
+  .reviews__dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+    margin-top: 1rem;
+  }
+  /* Trykkflaten er 24x24 px, prikken inni er mindre. */
+  .reviews__dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+  }
+  .reviews__dot::before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(37, 22, 5, 0.5);
+    transition: width var(--t) var(--ease),
+                background var(--t) var(--ease);
+  }
+  .reviews__dot[aria-current="true"]::before {
+    width: 20px;
+    background: var(--accent-strong);
+  }
+}
+
+/* 9. Hopp til innhold. Usynlig til den faar tastaturfokus. Ligger foerst i
+      DOM-en, saa den som navigerer med tab slipper aa gaa gjennom menyen
+      paa hver eneste side. */
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+}
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 300;
+  padding: 0.8rem 1.25rem;
+  background: var(--dark);
+  color: var(--white);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* 10. Hero-animasjonene var ikke gated paa prefers-reduced-motion. Den som
+       har slaatt av bevegelse i systemet fikk likevel bade innsvevingen av
+       teksten og en 14 sekunders zoom paa bakgrunnsbildet.
+       Merk fill-mode «both» paa fadeUp: starter animasjonen aldri, staar
+       teksten paa opacity 0. Her settes hvilestillingen eksplisitt. */
+@media (prefers-reduced-motion: reduce) {
+  .hero__content {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .hero__img {
+    animation: none;
+    transform: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 960px) {
+  /* To kort i bredden, det tredje under. Tre kort paa 960 px blir for smale
+     til at omtalene er behagelige aa lese. */
+  .reviews__grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
