@@ -419,16 +419,20 @@ button {
   font-weight: 700;
   line-height: 1.0;
   color: var(--white);
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.75rem;
 }
 
+/* Undertittelen ligger inne i h1, saa Google leser «Tømrer i Kvam» som
+   sidens hovedoverskrift. Den ser ut som foer. */
 .hero__subtitle {
+  display: block;
+  margin-top: 0.5rem;
   font-family: var(--ff-body);
   font-size: clamp(1rem, 2vw, 1.4rem);
   font-weight: 400;
+  line-height: 1.6;
   letter-spacing: 0.04em;
   color: var(--warm);
-  margin-bottom: 1.75rem;
 }
 
 .hero__sub {
@@ -571,11 +575,18 @@ button {
 }
 
 .service-card__title {
-  padding: 1.1rem 1.35rem 1.25rem;
+  padding: 1.1rem 1.35rem 0.35rem;
   font-family: var(--ff-heading);
   font-size: 1.15rem;
   font-weight: 600;
   color: var(--dark);
+}
+
+.service-card__text {
+  padding: 0 1.35rem 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--muted);
 }
 
 .services__more {
@@ -1040,8 +1051,13 @@ a.contact__detail-item:hover {
     gap: 0.75rem;
   }
   .service-card__title {
-    padding: 0.8rem 0.9rem 0.9rem;
+    padding: 0.8rem 0.9rem 0.3rem;
     font-size: 1rem;
+  }
+  .service-card__text {
+    padding: 0 0.9rem 0.9rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
   }
 
   /* Gallery */
