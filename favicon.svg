@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Passer-A fra logoen, paa varm laksefarge (warm i style.css). Moerk kontur rundt
+       lys metallflate, samme oppbygging som i logoen. -->
+  <rect width="64" height="64" rx="14" fill="#F1AB86"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- kontur -->
+    <path d="M32 11 13.5 54M32 11 50.5 54" stroke="#251605" stroke-width="10"/>
+    <path d="M19.5 39.5Q33 46 52 31" stroke="#251605" stroke-width="8"/>
+    <!-- metallflate -->
+    <path d="M32 11 13.5 54M32 11 50.5 54" stroke="#F4F1EC" stroke-width="4.5"/>
+    <path d="M19.5 39.5Q33 46 52 31" stroke="#F4F1EC" stroke-width="3"/>
+  </g>
+  <!-- hengsel -->
+  <circle cx="32" cy="11" r="6.5" fill="#251605"/>
+  <circle cx="32" cy="11" r="3.2" fill="#F4F1EC"/>
+  <circle cx="32" cy="11" r="1.2" fill="#8E4F31"/>
+</svg>
