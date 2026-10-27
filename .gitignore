@@ -6,3 +6,9 @@ _struktur/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Lokal cache fra wrangler pages dev
+.wrangler/
+
+# Interne utkast til kunden. Repoet er offentlig.
+EPOST-*.md

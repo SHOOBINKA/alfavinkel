@@ -5,3 +5,10 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
   Strict-Transport-Security: max-age=63072000
+
+# Cloudflare Pages serverer 404.html baade som feilside, der den gir riktig
+# 404-status, og som en vanlig side paa /404, der den gir 200. Den siste er en
+# myk 404 for Google. Siden har meta noindex fra foer, men headeren kommer
+# fram allerede foer HTML-en er lest, og gjelder ogsaa om noen lenker til den.
+/404
+  X-Robots-Tag: noindex

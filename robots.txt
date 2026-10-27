@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+# Cloudflare sine interne stier. Ikke ekte sider, og de svarer 404 hvis de
+# hentes. Googlebot fulgte dem og rapporterte dem som manglende sider.
+Disallow: /cdn-cgi/
+
 Sitemap: https://alfavinkel.no/sitemap.xml
